@@ -21,4 +21,6 @@ Id，分类【取值：主料、辅料、调料】
 
 ## 菜品材料表
 `dish_ingredient_table`
+- `dish_id`
+- `ingredient_id`
 菜品ID，材料ID

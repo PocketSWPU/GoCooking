@@ -1,13 +1,11 @@
-package com.pocket.demo01;
+package com.pocket.gocooking;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-
 @SpringBootApplication
+@MapperScan("com.pocket.gocooking.system.mapper")
 public class GoCookingApplication {
 
     public static void main(String[] args) {
