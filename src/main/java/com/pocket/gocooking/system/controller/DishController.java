@@ -48,6 +48,8 @@ public class DishController {
         return dishService.selectById(id);
     }
 
+    @GetMapping("/selectAll")
+    @Operation(summary = "查询所有")
     public List<Dish> selectAll(){
         return dishService.selectAll();
     }

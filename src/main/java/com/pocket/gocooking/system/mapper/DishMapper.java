@@ -22,5 +22,6 @@ public interface DishMapper extends BaseMapper<Dish> {
     @Select("select dish_id, name, time, difficulty from dish_table where dish_id = #{dish_id}")
     Dish selectById(@Param("dish_id") Integer id);
 
+    @Select("select * from dish_table")
     List<Dish> selectAll();
 }

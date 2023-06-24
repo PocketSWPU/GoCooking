@@ -3,7 +3,7 @@
 <mapper namespace="com.pocket.gocooking.system.mapper.DishMapper">
 
 
-    <select id="selectAll" resultType="Dish">
-        select * from dish_table
-    </select>
+<!--    <select id="selectAll" resultType="Dish">-->
+<!--        select * from dish_table-->
+<!--    </select>-->
 </mapper>
