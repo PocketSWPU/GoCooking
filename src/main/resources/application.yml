@@ -20,3 +20,5 @@ spring:
       roles:
         - user
         - admin
+mybatis:
+  type-aliases-package: com.pocket.gocooking.system.entity
