@@ -27,3 +27,10 @@ spring:
 mybatis:
   type-aliases-package: com.pocket.gocooking.system.entity
   mapper-locations: classpath:mapper/sys/*.xml
+
+#
+#pagehelper:
+#  helper-dialect: mysql
+#  reasonable: true
+#  support-methods-arguments: true
+#  params: count=countsql

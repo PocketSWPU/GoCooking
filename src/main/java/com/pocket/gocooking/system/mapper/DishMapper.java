@@ -23,5 +23,5 @@ public interface DishMapper{
     Dish selectById(@Param("dish_id") Integer id);
 
 //    @Select("select * from dish_table")
-    List<Dish> selectAll();
+    List<Dish> selectAll(@Param("name") String name, @Param("difficulty") String[] difficulty);
 }

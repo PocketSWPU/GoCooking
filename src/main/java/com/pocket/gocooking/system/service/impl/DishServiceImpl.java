@@ -29,7 +29,7 @@ public class DishServiceImpl implements DishService {
     }
 
     @Override
-    public List<Dish> selectAll() {
-        return dishMapper.selectAll();
+    public List<Dish> selectAll(String name, String[] difficulty) {
+        return dishMapper.selectAll(name, difficulty);
     }
 }

@@ -9,5 +9,5 @@ import java.util.List;
 public interface DishService {
     Dish selectById(Integer id);
 
-    List<Dish> selectAll();
+    List<Dish> selectAll(String name, String[] difficulty);
 }
