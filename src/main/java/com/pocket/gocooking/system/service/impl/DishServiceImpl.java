@@ -2,8 +2,8 @@ package com.pocket.gocooking.system.service.impl;
 
 import com.pocket.gocooking.system.entity.Dish;
 import com.pocket.gocooking.system.mapper.DishMapper;
-import com.pocket.gocooking.system.service.IDishService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.pocket.gocooking.system.service.DishService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,7 @@ import java.util.List;
  * @since 2023-06-24
  */
 @Service
-public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements IDishService {
+public class DishServiceImpl implements DishService {
 
     @Autowired
     private DishMapper dishMapper;

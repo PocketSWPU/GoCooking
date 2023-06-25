@@ -1,25 +1,20 @@
 package com.pocket.gocooking.system.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalTime;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author PengZF
  * @since 2023-06-24
  */
-@TableName("dish_table")
 public class Dish implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "dish_id", type = IdType.AUTO)
     private Integer dishId;
 
     private String name;

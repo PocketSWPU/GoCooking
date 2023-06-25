@@ -1,24 +1,19 @@
 package com.pocket.gocooking.system.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author PengZF
  * @since 2023-06-24
  */
-@TableName("ingredient_table")
 public class Ingredient implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "ingredient_id", type = IdType.AUTO)
     private Integer ingredientId;
 
     private Integer categoryId;

@@ -1,7 +1,7 @@
 package com.pocket.gocooking.system.controller;
 
 import com.pocket.gocooking.system.entity.Dish;
-import com.pocket.gocooking.system.service.IDishService;
+import com.pocket.gocooking.system.service.DishService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -28,7 +27,7 @@ import java.util.List;
 public class DishController {
 
     @Autowired
-    private IDishService dishService;
+    private DishService dishService;
 
     @GetMapping("/hello")
     @Operation(summary = "测试接口")

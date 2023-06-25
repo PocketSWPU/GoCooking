@@ -3,7 +3,17 @@
 <mapper namespace="com.pocket.gocooking.system.mapper.DishMapper">
 
 
-<!--    <select id="selectAll" resultType="Dish">-->
-<!--        select * from dish_table-->
+    <select id="selectAll" resultType="Dish">
+        select dish_id, name, time, difficulty from dish_table
+    </select>
+
+<!--    <select id="selectAll" resultMap="dishResultMap">-->
+<!--        select dish_id, name, time, difficulty from dish_table-->
 <!--    </select>-->
+<!--    <resultMap id="dishResultMap" type="Dish">-->
+<!--        <id property="dishId" column="dish_id" />-->
+<!--        <result property="name" column="name"/>-->
+<!--        <result property="time" column="time"/>-->
+<!--        <result property="difficulty" column="difficulty"/>-->
+<!--    </resultMap>-->
 </mapper>
