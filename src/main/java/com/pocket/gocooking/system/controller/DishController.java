@@ -4,12 +4,13 @@ package com.pocket.gocooking.system.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.pocket.gocooking.common.Result;
+import com.pocket.gocooking.system.entity.DishIngredientDTO;
 import com.pocket.gocooking.system.entity.Dish;
 import com.pocket.gocooking.system.service.DishService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.apache.ibatis.mapping.ResultMap;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -74,5 +75,11 @@ public class DishController {
         data.put("total", pageInfo.getTotal());
 
         return Result.success(data);
+    }
+
+    @GetMapping("/{id}")
+    @Operation(summary = "通过id查询配料")
+    public Result<List<DishIngredientDTO>> getIngredientById(@Param("id") Integer id){
+        return Result.success(dishService.getIngredientById(id));
     }
 }

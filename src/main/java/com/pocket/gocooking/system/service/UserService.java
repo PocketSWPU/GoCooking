@@ -11,4 +11,5 @@ public interface UserService {
     Map<String, Object> getUserInfo(String token);
 
     void logout(String token);
+
 }

@@ -1,5 +1,6 @@
 package com.pocket.gocooking.system.mapper;
 
+import com.pocket.gocooking.system.entity.DishIngredientDTO;
 import com.pocket.gocooking.system.entity.Dish;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -24,4 +25,6 @@ public interface DishMapper{
 
 //    @Select("select * from dish_table")
     List<Dish> selectAll(@Param("name") String name, @Param("difficulty") String[] difficulty);
+
+    List<DishIngredientDTO> getIngredientById(@Param("dish_id") Integer dish_id);
 }

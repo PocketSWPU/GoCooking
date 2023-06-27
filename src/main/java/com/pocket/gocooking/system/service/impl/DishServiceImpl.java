@@ -1,5 +1,6 @@
 package com.pocket.gocooking.system.service.impl;
 
+import com.pocket.gocooking.system.entity.DishIngredientDTO;
 import com.pocket.gocooking.system.entity.Dish;
 import com.pocket.gocooking.system.mapper.DishMapper;
 import com.pocket.gocooking.system.service.DishService;
@@ -31,5 +32,10 @@ public class DishServiceImpl implements DishService {
     @Override
     public List<Dish> selectAll(String name, String[] difficulty) {
         return dishMapper.selectAll(name, difficulty);
+    }
+
+    @Override
+    public List<DishIngredientDTO> getIngredientById(Integer id) {
+        return dishMapper.getIngredientById(id);
     }
 }
