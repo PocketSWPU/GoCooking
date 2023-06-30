@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
 
             loginUser.setPassword(null);
             redisTemplate.opsForValue().set(key, loginUser, 1, TimeUnit.HOURS);
-            HashMap<String, Object> data = new HashMap<>();
+            HashMap<String, Object> data = new HashMap<>(3);
             data.put("token", key);
             return data;
         }

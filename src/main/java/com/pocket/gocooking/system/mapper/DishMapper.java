@@ -23,7 +23,12 @@ public interface DishMapper{
     @Select("select dish_id as dishId, name, time, difficulty from dish_table where dish_id = #{dish_id}")
     Dish selectById(@Param("dish_id") Integer id);
 
-//    @Select("select * from dish_table")
+    /**
+     * 通过菜名or困难度筛选
+     * @param name
+     * @param difficulty
+     * @return
+     */
     List<Dish> selectAll(@Param("name") String name, @Param("difficulty") String[] difficulty);
 
     List<DishIngredientDTO> getIngredientById(@Param("dish_id") Integer dish_id);

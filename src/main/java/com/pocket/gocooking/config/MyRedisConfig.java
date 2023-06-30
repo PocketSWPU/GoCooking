@@ -11,11 +11,14 @@ import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator
 import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.SetOperations;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 
@@ -26,6 +29,7 @@ public class MyRedisConfig {
     private RedisConnectionFactory factory;
 
     @Bean
+    @Primary
     public RedisTemplate redisTemplate(){
         RedisTemplate<Object, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(factory);  // 设置连接工厂
@@ -47,4 +51,15 @@ public class MyRedisConfig {
 
         return redisTemplate;
     }
+
+//    /**
+//     * 实例化 SetOperations 对象,可以使用 Set 操作
+//     *
+//     * @param redisTemplate
+//     * @return
+//     */
+//    @Bean
+//    public SetOperations setOperations(RedisTemplate redisTemplate) {
+//        return redisTemplate.opsForSet();
+//    }
 }

@@ -5,6 +5,7 @@ import com.pocket.gocooking.system.entity.Dish;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public interface DishService {
@@ -13,4 +14,8 @@ public interface DishService {
     List<Dish> selectAll(String name, String[] difficulty);
 
     List<DishIngredientDTO> getIngredientById(Integer id);
+
+    void addAllTodo(Integer id);
+
+    Set getAllTodo();
 }

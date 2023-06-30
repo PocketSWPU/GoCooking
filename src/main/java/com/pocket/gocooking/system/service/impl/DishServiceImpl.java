@@ -6,9 +6,13 @@ import com.pocket.gocooking.system.mapper.DishMapper;
 import com.pocket.gocooking.system.service.DishService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
@@ -23,6 +27,8 @@ public class DishServiceImpl implements DishService {
 
     @Autowired
     private DishMapper dishMapper;
+    @Autowired
+    private RedisTemplate redis;
 
     @Override
     public Dish selectById(Integer id) {
@@ -38,4 +44,22 @@ public class DishServiceImpl implements DishService {
     public List<DishIngredientDTO> getIngredientById(Integer id) {
         return dishMapper.getIngredientById(id);
     }
+
+    @Override
+    public void addAllTodo(Integer id) {
+        // 加入Redis
+        List<DishIngredientDTO> data = dishMapper.getIngredientById(id);
+        for (DishIngredientDTO dish : data) {
+            redis.opsForSet().add("todo", dish.getName());
+        }
+        redis.expire("todo",12, TimeUnit.HOURS);
+    }
+
+
+    @Override
+    public Set getAllTodo() {
+        return redis.opsForSet().members("todo");
+    }
+
+
 }

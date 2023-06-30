@@ -12,11 +12,13 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * <p>
@@ -81,5 +83,17 @@ public class DishController {
     @Operation(summary = "通过id查询配料")
     public Result<List<DishIngredientDTO>> getIngredientById(@Param("id") Integer id){
         return Result.success(dishService.getIngredientById(id));
+    }
+
+    @GetMapping("/todo")
+    @Operation(summary = "获取todo")
+    public Result<Set> getAllTodo(){
+        return Result.success(dishService.getAllTodo());
+    }
+
+    @PutMapping("/addAll")
+    public Result addAllTodo(@Param("id") Integer id){
+        dishService.addAllTodo(id);
+        return Result.success();
     }
 }
