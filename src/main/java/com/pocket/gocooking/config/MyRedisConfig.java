@@ -30,12 +30,13 @@ public class MyRedisConfig {
 
     @Bean
     @Primary
-    public RedisTemplate redisTemplate(){
-        RedisTemplate<Object, Object> redisTemplate = new RedisTemplate<>();
+    public RedisTemplate<String, Object> redisTemplate(){
+        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(factory);  // 设置连接工厂
 
-        redisTemplate.setKeySerializer(new StringRedisSerializer());  // String类型序列化处理
-        Jackson2JsonRedisSerializer<Object> serializer = new Jackson2JsonRedisSerializer<Object>(Object.class);
+        // String类型序列化处理
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        Jackson2JsonRedisSerializer<Object> serializer = new Jackson2JsonRedisSerializer<>(Object.class);
         redisTemplate.setValueSerializer(serializer);
 
         ObjectMapper om = new ObjectMapper();

@@ -8,4 +8,5 @@ public interface UserMapper {
     User selectByNameAndPassword(User user);
 
 
+//    Integer selectIdBySession();
 }

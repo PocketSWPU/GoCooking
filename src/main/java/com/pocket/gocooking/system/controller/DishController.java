@@ -92,8 +92,8 @@ public class DishController {
     }
 
     @PutMapping("/addAll")
-    public Result addAllTodo(@Param("id") Integer id){
-        dishService.addAllTodo(id);
+    public Result addAllTodo(@Param("id") Integer id, @Param("session") String session){
+        dishService.addAllTodo(id, session);
         return Result.success();
     }
 }

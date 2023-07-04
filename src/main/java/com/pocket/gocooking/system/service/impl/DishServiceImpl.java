@@ -1,10 +1,14 @@
 package com.pocket.gocooking.system.service.impl;
 
+import com.alibaba.fastjson2.JSON;
 import com.pocket.gocooking.system.entity.DishIngredientDTO;
 import com.pocket.gocooking.system.entity.Dish;
+import com.pocket.gocooking.system.entity.User;
 import com.pocket.gocooking.system.mapper.DishMapper;
+import com.pocket.gocooking.system.mapper.UserMapper;
 import com.pocket.gocooking.system.service.DishService;
 
+import io.swagger.v3.core.util.Json;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -28,7 +32,9 @@ public class DishServiceImpl implements DishService {
     @Autowired
     private DishMapper dishMapper;
     @Autowired
-    private RedisTemplate redis;
+    private RedisTemplate<String, Object> redis;
+    @Autowired
+    private UserMapper userMapper;
 
     @Override
     public Dish selectById(Integer id) {
@@ -46,13 +52,19 @@ public class DishServiceImpl implements DishService {
     }
 
     @Override
-    public void addAllTodo(Integer id) {
+    public void addAllTodo(Integer id, String session) {
+        // 获取用户session
+        Object session1 = redis.opsForValue().get(session);
+        User user = JSON.parseObject(JSON.toJSONString(session1),User.class);
+        Integer userId = user.getId();
+
         // 加入Redis
         List<DishIngredientDTO> data = dishMapper.getIngredientById(id);
+        String redisKey = "user:"+userId +":todo";
         for (DishIngredientDTO dish : data) {
-            redis.opsForSet().add("todo", dish.getName());
+            redis.opsForSet().add(redisKey, dish.getName());
         }
-        redis.expire("todo",12, TimeUnit.HOURS);
+        redis.expire(redisKey,12, TimeUnit.HOURS);
     }
 
 

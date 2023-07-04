@@ -15,7 +15,7 @@ public interface DishService {
 
     List<DishIngredientDTO> getIngredientById(Integer id);
 
-    void addAllTodo(Integer id);
+    void addAllTodo(Integer id, String session);
 
     Set getAllTodo();
 }
