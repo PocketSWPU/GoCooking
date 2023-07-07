@@ -22,6 +22,9 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 
+/**
+ * @author Pocket
+ */
 @Configuration
 public class MyRedisConfig {
 
@@ -43,7 +46,6 @@ public class MyRedisConfig {
         om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
         om.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
         om.setTimeZone(TimeZone.getDefault());
-//        om.configure(MapperFeature.USE_ANNOTATIONS, false);
         om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         om.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         om.activateDefaultTyping(LaissezFaireSubTypeValidator.instance ,ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
