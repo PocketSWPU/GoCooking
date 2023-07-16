@@ -2,4 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pocket.gocooking.system.mapper.IngredientMapper">
 
+    <select id="selectByName" resultType="Ingredient">
+        SELECT * FROM ingredient_table WHERE ingredient_name = #{name}
+    </select>
+
+    <insert id="insertIngredient" parameterType="Ingredient">
+        insert into ingredient_table (ingredient_name, category_id) values (#{ingredientName}, #{categoryId})
+        <selectKey keyProperty="ingredientId" order="AFTER" resultType="int" keyColumn="ingredient_id">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+
 </mapper>

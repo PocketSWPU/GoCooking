@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -66,7 +67,9 @@ public class DishController {
                                                  @RequestParam("pageNo") Integer pageNo,
                                                  @RequestParam("pageSize") Integer pageSize,
                                                  @RequestParam(value = "difficulty", required = false) String[] difficulty) {
-        if(name != null) name = "%" + name +"%"; // 加上通配符
+        if(name != null) {
+            name = "%" + name +"%"; // 加上通配符
+        }
 //        String[] difficultyArray = difficulty.split(",");
         PageHelper.startPage(pageNo, pageSize);
         List<Dish> dishResult = dishService.selectAll(name,difficulty);
@@ -95,5 +98,16 @@ public class DishController {
     public Result addAllTodo(@Param("id") Integer id, @Param("session") String session){
         dishService.addAllTodo(id, session);
         return Result.success();
+    }
+
+    @PutMapping("/insert")
+    @Operation(summary = "添加菜品")
+    @Transactional(rollbackFor = Exception.class)
+    public Result insertDish(@RequestParam(value = "name", required = false) String name,
+                             @RequestParam(value = "difficulty", required = false) String difficulty,
+                             @RequestParam(value = "ingredients", required = false) String ingredients){
+        Integer result = dishService.insertDish(name, difficulty, ingredients);
+
+        return result == 1?Result.success():Result.fail();
     }
 }

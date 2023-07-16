@@ -42,5 +42,17 @@
         <result property="difficulty" column="difficulty"/>
     </resultMap>
 
+    <insert id="insertDish" parameterType="Dish">
+        insert into dish_table (name,difficulty) values (#{name}, #{difficulty})
+        <selectKey keyProperty="dishId" order="AFTER" resultType="int" keyColumn="dish_id">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <insert id="insertDishIngredient" parameterType="DishIngredient">
+        insert into dish_ingredient_table (dish_id, ingredient_id)
+        VALUES (#{dishId}, #{ingredientId})
+    </insert>
+
 
 </mapper>

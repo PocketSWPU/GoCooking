@@ -12,7 +12,7 @@ import org.springframework.stereotype.Controller;
  * @since 2023-06-24
  */
 @Controller
-@RequestMapping("/system/ingredient")
+@RequestMapping("/ingredient")
 public class IngredientController {
 
 }

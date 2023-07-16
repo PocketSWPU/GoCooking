@@ -1,5 +1,6 @@
 package com.pocket.gocooking.system.mapper;
 
+import com.pocket.gocooking.system.entity.DishIngredient;
 import com.pocket.gocooking.system.entity.DishIngredientDTO;
 import com.pocket.gocooking.system.entity.Dish;
 
@@ -32,4 +33,18 @@ public interface DishMapper{
     List<Dish> selectAll(@Param("name") String name, @Param("difficulty") String[] difficulty);
 
     List<DishIngredientDTO> getIngredientById(@Param("dish_id") Integer dish_id);
+
+    /**
+     * 插入数据
+     * @param dish 菜品
+     * @return id
+     */
+    Integer insertDish(Dish dish);
+
+    /**
+     * 加入菜品、配料联系表
+     * @param dishIngredient
+     */
+    void insertDishIngredient(DishIngredient dishIngredient);
+//    boolean selectByName(@Param("name"));
 }
