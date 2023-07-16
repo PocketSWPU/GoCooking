@@ -96,14 +96,20 @@ public class DishServiceImpl implements DishService {
         // 3. 分离字符串
         // 3.1 插入ingredient_table
         // 3.2 如果数据库里没有, 先添加   ===  这里可以加缓存
-        int categoryCount = 1;
+        int categoryCount = 0;
         String[] ingredientsGroup = ingredients.split("x");
         for(String ingredient: ingredientsGroup){
+            ++categoryCount;
+            if("undefined".equals(ingredient)){
+                continue;
+            }
             String[] tempIngredients = ingredient.split("，");
             for(String ingredientName: tempIngredients){
                 // 不存在 添加
                 Integer ingredientAdded = -1;
                 Ingredient tempIngre = ingredientMapper.selectByName(ingredientName);
+
+                // 看配料存不存在
                 if(tempIngre == null){
                     Ingredient ingredient1 = new Ingredient();
                     ingredient1.setIngredientName(ingredientName);
@@ -113,13 +119,13 @@ public class DishServiceImpl implements DishService {
                 }else{
                     ingredientAdded = tempIngre.getIngredientId();
                 }
+
                 // 存在 添加到dish_ingredient_table
                 DishIngredient dishIngredient = new DishIngredient();
                 dishIngredient.setDishId(dishId);
                 dishIngredient.setIngredientId(ingredientAdded);
                 dishMapper.insertDishIngredient(dishIngredient);
             }
-            categoryCount++;
         }
 
         return 1;
