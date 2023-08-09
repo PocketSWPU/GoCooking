@@ -2,6 +2,7 @@ package com.pocket.gocooking.system.service.impl;
 
 import com.alibaba.fastjson2.JSON;
 import com.pocket.gocooking.system.entity.*;
+import com.pocket.gocooking.system.mapper.DishIngredientMapper;
 import com.pocket.gocooking.system.mapper.DishMapper;
 import com.pocket.gocooking.system.mapper.IngredientMapper;
 import com.pocket.gocooking.system.mapper.UserMapper;
@@ -38,6 +39,8 @@ public class DishServiceImpl implements DishService {
     private UserMapper userMapper;
     @Autowired
     private IngredientMapper ingredientMapper;
+    @Autowired
+    private DishIngredientMapper dishIngredientMapper;
 
     @Override
     public Dish selectById(Integer id) {
@@ -103,7 +106,7 @@ public class DishServiceImpl implements DishService {
             if("undefined".equals(ingredient)){
                 continue;
             }
-            String[] tempIngredients = ingredient.split("，");
+            String[] tempIngredients = ingredient.replaceAll(",","，").split("，");
             for(String ingredientName: tempIngredients){
                 // 不存在 添加
                 Integer ingredientAdded = -1;
@@ -131,5 +134,11 @@ public class DishServiceImpl implements DishService {
         return 1;
     }
 
-
+    @Override
+    public Integer deleteDish(Integer dishId) {
+        // 1. 删除关联的配料
+        dishIngredientMapper.deleteIngredientByDishId(dishId);
+        // 2. 删除菜品
+        return dishMapper.deleteDishById(dishId);
+    }
 }

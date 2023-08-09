@@ -12,7 +12,6 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,6 +35,9 @@ public class DishController {
 
     @Autowired
     private DishService dishService;
+
+//    @Autowired
+//    private CacheManager cacheManager;
 
     @GetMapping("/hello")
     @Operation(summary = "测试接口")
@@ -109,5 +111,13 @@ public class DishController {
         Integer result = dishService.insertDish(name, difficulty, ingredients);
 
         return result == 1?Result.success():Result.fail();
+    }
+
+    @DeleteMapping("/delete/{id}")
+    @Transactional(rollbackFor = Exception.class)
+    @Operation(summary = "删除菜品")
+    public Result deleteDish(@Param("id") Integer id){
+        dishService.deleteDish(id);
+        return Result.success();
     }
 }

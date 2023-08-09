@@ -24,3 +24,14 @@ Id，分类【取值：主料、辅料、调料】
 - `dish_id`
 - `ingredient_id`
 菜品ID，材料ID
+
+
+## 步骤表
+`step_table`
+
+- `id`： 表主键
+- `dish_id`: 菜品主键
+- `step`: 步骤编号
+- `description`: 文本描述
+
+啊啊

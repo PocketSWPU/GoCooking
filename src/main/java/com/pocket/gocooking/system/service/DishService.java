@@ -38,4 +38,10 @@ public interface DishService {
      */
     Integer insertDish(String name, String difficulty, String ingredients);
 
+    /**
+     * 删除菜品
+     * @param id 主键
+     * @return 操作数
+     */
+    Integer deleteDish(Integer id);
 }

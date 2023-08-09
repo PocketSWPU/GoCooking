@@ -47,4 +47,6 @@ public interface DishMapper{
      */
     void insertDishIngredient(DishIngredient dishIngredient);
 //    boolean selectByName(@Param("name"));
+
+    Integer deleteDishById(Integer dishId);
 }

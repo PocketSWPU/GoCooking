@@ -29,7 +29,7 @@
         FROM dish_table a
         LEFT JOIN dish_ingredient_table b on b.dish_id = a.dish_id
         LEFT JOIN ingredient_table c on b.ingredient_id = c.ingredient_id
-        LEFT JOIN ingredient_category_table d on d.ingredient_category_id = c.category_id
+        INNER JOIN ingredient_category_table d on d.ingredient_category_id = c.category_id
         WHERE a.dish_id = #{dish_id};
     </select>
 
@@ -53,6 +53,10 @@
         insert into dish_ingredient_table (dish_id, ingredient_id)
         VALUES (#{dishId}, #{ingredientId})
     </insert>
+
+    <delete id="deleteDishById" parameterType="Integer">
+        DELETE FROM dish_table WHERE dish_id = #{dishId}
+    </delete>
 
 
 </mapper>
