@@ -3,6 +3,8 @@ package com.pocket.gocooking.system.service;
 import com.pocket.gocooking.system.entity.Ingredient;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author Pocket
  * @date 2023-7-16 22:06:48
@@ -14,7 +16,7 @@ public interface IngredientService {
      * @param name
      * @return
      */
-    Ingredient selectByName(String name);
+    List<Ingredient> selectByName(String name);
 
     /**
      * 添加配料信息

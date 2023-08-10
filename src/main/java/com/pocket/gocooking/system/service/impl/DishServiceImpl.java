@@ -110,17 +110,18 @@ public class DishServiceImpl implements DishService {
             for(String ingredientName: tempIngredients){
                 // 不存在 添加
                 Integer ingredientAdded = -1;
-                Ingredient tempIngre = ingredientMapper.selectByName(ingredientName);
+//                Ingredient tempIngre = ingredientMapper.selectByName(ingredientName);
+                List<Ingredient> tempIngreList = ingredientMapper.selectByName(ingredientName);
 
                 // 看配料存不存在
-                if(tempIngre == null){
+                if(tempIngreList.size() < 1){
                     Ingredient ingredient1 = new Ingredient();
                     ingredient1.setIngredientName(ingredientName);
                     ingredient1.setCategoryId(categoryCount);
                     ingredientMapper.insertIngredient(ingredient1);
                     ingredientAdded = ingredient1.getIngredientId();
                 }else{
-                    ingredientAdded = tempIngre.getIngredientId();
+                    ingredientAdded = tempIngreList.get(0).getIngredientId();
                 }
 
                 // 存在 添加到dish_ingredient_table

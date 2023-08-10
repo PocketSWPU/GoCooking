@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pocket.gocooking.system.mapper.StepMapper">
+
+
+    <select id="selectStepsByDishId" resultType="Step">
+        select step, description from step_table where dish_id = #{dishId}
+        ORDER BY step
+    </select>
+
+    <insert id="insertStepsByDishId" parameterType="List">
+        INSERT INTO step_table (dish_id, step, description) VALUES
+        <foreach collection="list" item="step" separator=",">
+            (#{step.dishId}, #{step.step}, #{step.description})
+        </foreach>
+    </insert>
+
+    <delete id="deleteStepsByDishId" parameterType="Integer">
+        DELETE FROM step_table WHERE dish_id = #{dishId}
+    </delete>
+
+</mapper>

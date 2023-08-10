@@ -6,6 +6,8 @@ import com.pocket.gocooking.system.service.IngredientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务实现类
@@ -20,7 +22,7 @@ public class IngredientServiceImpl implements IngredientService {
     IngredientMapper ingredientMapper;
 
     @Override
-    public Ingredient selectByName(String name) {
+    public List<Ingredient> selectByName(String name) {
         return ingredientMapper.selectByName(name);
     }
 

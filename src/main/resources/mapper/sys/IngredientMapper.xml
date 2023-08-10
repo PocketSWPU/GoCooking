@@ -2,9 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pocket.gocooking.system.mapper.IngredientMapper">
 
-    <select id="selectByName" resultType="Ingredient">
+    <select id="selectByName" resultMap="ingResultMap">
         SELECT * FROM ingredient_table WHERE ingredient_name = #{name}
     </select>
+    <resultMap id="ingResultMap" type="Ingredient">
+        <id property="ingredientId" column="ingredient_id" />
+        <result property="categoryId" column="category_id"/>
+        <result property="ingredientName" column="ingredient_name"/>
+    </resultMap>
 
     <insert id="insertIngredient" parameterType="Ingredient">
         insert into ingredient_table (ingredient_name, category_id) values (#{ingredientName}, #{categoryId})

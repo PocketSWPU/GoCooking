@@ -4,6 +4,8 @@ import com.pocket.gocooking.system.entity.Ingredient;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * <p>
  *  Mapper 接口
@@ -19,7 +21,7 @@ public interface IngredientMapper{
      * @param name
      * @return
      */
-    Ingredient selectByName(@Param("name") String name);
+    List<Ingredient> selectByName(@Param("name") String name);
 
     /**
      * 添加配料

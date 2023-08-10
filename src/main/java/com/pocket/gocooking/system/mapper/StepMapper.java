@@ -17,4 +17,18 @@ public interface StepMapper {
      * @return
      */
     List<Step> selectStepsByDishId(Integer dishId);
+
+    /**
+     * 添加一个Step
+     * @param steps
+     * @return
+     */
+    Integer insertStepsByDishId(List<Step> steps);
+
+    /**
+     * 删除
+     * @param dishId
+     * @return
+     */
+    Integer deleteStepsByDishId(Integer dishId);
 }
