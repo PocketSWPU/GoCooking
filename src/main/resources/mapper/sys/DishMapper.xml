@@ -30,7 +30,7 @@
         LEFT JOIN dish_ingredient_table b on b.dish_id = a.dish_id
         LEFT JOIN ingredient_table c on b.ingredient_id = c.ingredient_id
         INNER JOIN ingredient_category_table d on d.ingredient_category_id = c.category_id
-        WHERE a.dish_id = #{dish_id};
+        WHERE a.dish_id = #{dishId};
     </select>
 
 

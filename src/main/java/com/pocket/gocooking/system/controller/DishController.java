@@ -70,7 +70,8 @@ public class DishController {
                                                  @RequestParam("pageSize") Integer pageSize,
                                                  @RequestParam(value = "difficulty", required = false) String[] difficulty) {
         if(name != null) {
-            name = "%" + name +"%"; // 加上通配符
+            // 加上通配符
+            name = "%" + name +"%";
         }
 //        String[] difficultyArray = difficulty.split(",");
         PageHelper.startPage(pageNo, pageSize);
@@ -116,7 +117,7 @@ public class DishController {
     @DeleteMapping("/delete/{id}")
     @Transactional(rollbackFor = Exception.class)
     @Operation(summary = "删除菜品")
-    public Result deleteDish(@Param("id") Integer id){
+    public Result deleteDish(@PathVariable("id") Integer id){
         dishService.deleteDish(id);
         return Result.success();
     }

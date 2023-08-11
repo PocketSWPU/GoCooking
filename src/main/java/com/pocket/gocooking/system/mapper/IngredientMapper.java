@@ -21,7 +21,16 @@ public interface IngredientMapper{
      * @param name
      * @return
      */
-    List<Ingredient> selectByName(@Param("name") String name);
+    List<Ingredient> selectIngredient(@Param("name") String name,
+                                      @Param("ingredientId") Integer ingredientId,
+                                      @Param("categoryId") Integer categoryId);
+
+    /**
+     * mapper接口重载测试
+     * @param name
+     * @return
+     */
+    List<Ingredient> selectIngredient(@Param("name") String name);
 
     /**
      * 添加配料
@@ -29,4 +38,12 @@ public interface IngredientMapper{
      * @return
      */
     Integer insertIngredient(Ingredient ingredient);
+
+    /**
+     * 根据dishId查询对应的category的配料名
+     * @param category
+     * @param dishId
+     * @return
+     */
+    List<Ingredient> selectIngredientsByCategory(@Param("category") Integer category, @Param("dishId") Integer dishId);
 }

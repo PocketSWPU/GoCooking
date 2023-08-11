@@ -108,26 +108,37 @@ public class DishServiceImpl implements DishService {
             }
             String[] tempIngredients = ingredient.replaceAll(",","，").split("，");
             for(String ingredientName: tempIngredients){
-                // 不存在 添加
-                Integer ingredientAdded = -1;
-//                Ingredient tempIngre = ingredientMapper.selectByName(ingredientName);
-                List<Ingredient> tempIngreList = ingredientMapper.selectByName(ingredientName);
-
-                // 看配料存不存在
-                if(tempIngreList.size() < 1){
-                    Ingredient ingredient1 = new Ingredient();
-                    ingredient1.setIngredientName(ingredientName);
-                    ingredient1.setCategoryId(categoryCount);
-                    ingredientMapper.insertIngredient(ingredient1);
-                    ingredientAdded = ingredient1.getIngredientId();
-                }else{
-                    ingredientAdded = tempIngreList.get(0).getIngredientId();
+                if ("".equals(ingredientName)) {
+                    continue;
                 }
-
-                // 存在 添加到dish_ingredient_table
+                // 看配料存不存在
+                // 先看Redis
+                Boolean isInCache = redis.opsForHash().hasKey("ingredientCache", ingredientName);
+                Integer ingredientAddedId = -1;
+                // 在缓存中
+                if (isInCache){
+                    // Hash -> k: name, v: id
+                    ingredientAddedId = (Integer) redis.opsForHash().get("ingredientCache", ingredientName);
+                }else{
+                    // 查db
+                    List<Ingredient> tempIngreList = ingredientMapper.selectIngredient(ingredientName,null,null);
+                    // 不存在 添加
+                    if(tempIngreList.size() < 1){
+                        Ingredient tempIngredient = new Ingredient(null,categoryCount, ingredientName);
+                        ingredientMapper.insertIngredient(tempIngredient);
+                        // 获取新增的id
+                        ingredientAddedId = tempIngredient.getIngredientId();
+                    }else{
+                        // 存在，获取id
+                        ingredientAddedId = tempIngreList.get(0).getIngredientId();
+                    }
+                    // 更新缓存，仅新增
+                    redis.opsForHash().put("ingredientCache",ingredientName, ingredientAddedId);
+                }
+                // 添加到dish_ingredient_table
                 DishIngredient dishIngredient = new DishIngredient();
                 dishIngredient.setDishId(dishId);
-                dishIngredient.setIngredientId(ingredientAdded);
+                dishIngredient.setIngredientId(ingredientAddedId);
                 dishMapper.insertDishIngredient(dishIngredient);
             }
         }

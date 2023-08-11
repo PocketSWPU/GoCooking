@@ -32,7 +32,12 @@ public interface DishMapper{
      */
     List<Dish> selectAll(@Param("name") String name, @Param("difficulty") String[] difficulty);
 
-    List<DishIngredientDTO> getIngredientById(@Param("dish_id") Integer dish_id);
+    /**
+     * 获取和dish_id对应的
+     * @param dishId
+     * @return
+     */
+    List<DishIngredientDTO> getIngredientById(@Param("dishId") Integer dishId);
 
     /**
      * 插入数据

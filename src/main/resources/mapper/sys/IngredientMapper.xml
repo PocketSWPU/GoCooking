@@ -2,9 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pocket.gocooking.system.mapper.IngredientMapper">
 
-    <select id="selectByName" resultMap="ingResultMap">
-        SELECT * FROM ingredient_table WHERE ingredient_name = #{name}
+    <select id="selectIngredient" resultMap="ingResultMap">
+        SELECT * FROM ingredient_table
+        <where>
+            <if test="name != null">
+                ingredient_name = #{name}
+            </if>
+            <if test="ingredientId != null">
+            AND
+                ingredient_id = #{ingredientId}
+            </if>
+            <if test="categoryId != null">
+                AND
+                category_id = #{categoryId}
+            </if>
+        </where>
     </select>
+
     <resultMap id="ingResultMap" type="Ingredient">
         <id property="ingredientId" column="ingredient_id" />
         <result property="categoryId" column="category_id"/>
@@ -18,5 +32,11 @@
         </selectKey>
     </insert>
 
+    <select id="selectIngredientsByCategory" resultMap="ingResultMap">
+        SELECT b.ingredient_name FROM dish_ingredient_table a
+        LEFT JOIN ingredient_table b ON a.ingredient_id = b.ingredient_id
+        LEFT JOIN ingredient_category_table c ON b.category_id = c.ingredient_category_id
+        WHERE a.dish_id = #{dishId} AND c.ingredient_category_id = #{category}
+    </select>
 
 </mapper>

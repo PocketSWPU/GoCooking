@@ -23,11 +23,16 @@ public class IngredientServiceImpl implements IngredientService {
 
     @Override
     public List<Ingredient> selectByName(String name) {
-        return ingredientMapper.selectByName(name);
+        return ingredientMapper.selectIngredient(name);
     }
 
     @Override
     public Integer insertIngredient(Ingredient ingredient) {
         return ingredientMapper.insertIngredient(ingredient);
+    }
+
+    @Override
+    public List<Ingredient> selectByCategory(Integer category, Integer dishId) {
+        return ingredientMapper.selectIngredientsByCategory(category,dishId);
     }
 }

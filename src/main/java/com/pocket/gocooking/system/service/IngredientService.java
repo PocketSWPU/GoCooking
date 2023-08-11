@@ -24,4 +24,12 @@ public interface IngredientService {
      * @return
      */
     Integer insertIngredient(Ingredient ingredient);
+
+    /**
+     * 根据dishId和category查询对应的配料
+     * @param category
+     * @param dishId
+     * @return
+     */
+    List<Ingredient> selectByCategory(Integer category, Integer dishId);
 }
