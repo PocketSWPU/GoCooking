@@ -1,6 +1,7 @@
 package com.pocket.gocooking.system.service.impl;
 
 import com.alibaba.fastjson2.JSON;
+import com.pocket.gocooking.common.Utils;
 import com.pocket.gocooking.system.entity.*;
 import com.pocket.gocooking.system.mapper.DishIngredientMapper;
 import com.pocket.gocooking.system.mapper.DishMapper;
@@ -41,6 +42,8 @@ public class DishServiceImpl implements DishService {
     private IngredientMapper ingredientMapper;
     @Autowired
     private DishIngredientMapper dishIngredientMapper;
+    @Autowired
+    private Utils utils;
 
     @Override
     public Dish selectById(Integer id) {
@@ -121,17 +124,8 @@ public class DishServiceImpl implements DishService {
                     ingredientAddedId = (Integer) redis.opsForHash().get("ingredientCache", ingredientName);
                 }else{
                     // 查db
-                    List<Ingredient> tempIngreList = ingredientMapper.selectIngredient(ingredientName,null,null);
-                    // 不存在 添加
-                    if(tempIngreList.size() < 1){
-                        Ingredient tempIngredient = new Ingredient(null,categoryCount, ingredientName);
-                        ingredientMapper.insertIngredient(tempIngredient);
-                        // 获取新增的id
-                        ingredientAddedId = tempIngredient.getIngredientId();
-                    }else{
-                        // 存在，获取id
-                        ingredientAddedId = tempIngreList.get(0).getIngredientId();
-                    }
+                    ingredientAddedId = utils.checkIngredient(ingredientName, categoryCount);
+
                     // 更新缓存，仅新增
                     redis.opsForHash().put("ingredientCache",ingredientName, ingredientAddedId);
                 }
@@ -152,5 +146,21 @@ public class DishServiceImpl implements DishService {
         dishIngredientMapper.deleteIngredientByDishId(dishId);
         // 2. 删除菜品
         return dishMapper.deleteDishById(dishId);
+    }
+
+    @Override
+    public Integer updateDishIngredient(Integer dishId, String ingredientStr, Integer category) {
+        String[] labels = ingredientStr.replaceAll(",", "，").split("，");
+        // 删除全部已经关联的
+        dishIngredientMapper.deleteByCategory(dishId, category);
+        int ans = 0;
+        for(String label: labels){
+            Integer ingredientId = utils.checkIngredient(label, category);
+            DishIngredient dishIngredient = new DishIngredient();
+            dishIngredient.setDishId(dishId);
+            dishIngredient.setIngredientId(ingredientId);
+            dishMapper.insertDishIngredient(dishIngredient);
+        }
+        return 1;
     }
 }

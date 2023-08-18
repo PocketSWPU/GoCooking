@@ -13,4 +13,12 @@ public interface DishIngredientMapper {
      * @return
      */
     Integer deleteIngredientByDishId(Integer dishId);
+
+    /**
+     * 删除与dishId相关的种类为categoryId的配料关联
+     * @param dishId
+     * @param categoryId
+     * @return
+     */
+    Integer deleteByCategory(Integer dishId, Integer categoryId);
 }

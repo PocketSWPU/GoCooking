@@ -44,4 +44,12 @@ public interface DishService {
      * @return 操作数
      */
     Integer deleteDish(Integer id);
+
+    /**
+     * 更新关联材料
+     * @param id
+     * @param ingredientStr
+     * @return
+     */
+    Integer updateDishIngredient(Integer id, String ingredientStr, Integer category);
 }

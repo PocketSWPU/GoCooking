@@ -4,4 +4,11 @@
     <delete id="deleteIngredientByDishId" parameterType="Integer">
         DELETE FROM dish_ingredient_table WHERE dish_id = #{dishId}
     </delete>
+
+    <delete id="deleteByCategory" parameterType="IngredientCategoryDTO">
+        DELETE FROM dish_ingredient_table
+        WHERE dish_id = #{dishId}
+        AND ingredient_id IN
+            (SELECT ingredient_id FROM ingredient_table WHERE category_id = #{categoryId})
+    </delete>
 </mapper>

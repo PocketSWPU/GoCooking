@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * 公共响应类
+ * @author Pocket
  */
 @Data
 @NoArgsConstructor

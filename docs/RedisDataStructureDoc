@@ -1,0 +1,72 @@
+# Redis应用总结
+该文档大致总结该项目中对Redis各种数据类型的使用。
+
+## String
+对String的应用包括存储登录的Session
+```shell
+# token userInfo
+SET uid::xxxxx {username: xxx, role: xxx}
+```
+
+## Hash
+在新增菜品功能的逻辑中，会先判断与该菜品关联的配料是否在数据库中存在，
+如果一个菜品关联的配料很多，那么对数据库的访问次数就越多。
+
+所以采用Hash类型进行缓存。
+```shell
+HSET ingredientCache ingredientName ingredientId
+or
+HSET uid:xxxx ingredientName ingredientId
+```
+感觉也可以用String类型替代呢。。
+```shell
+SET ingredientName ingredientId
+```
+
+## Set
+### 1. Todo列表
+Todo功能是记录今天要做的菜里，要采购的材料，具有时效性，所以用Redis比较合适。
+
+并且，去重也是个重要的需求，比如菜品1材料是牛肉和番茄，菜品2材料是牛肉和芹菜，
+那么Todo列表里应该是：牛肉，番茄，芹菜
+
+所以用Set来实现
+```shell
+SADD uid::xxxx::todo 牛肉 芹菜 番茄
+SADD uid::xxxx::todo dish:id1 dish:id2 dish:id3
+```
+最后给整个set设置一个过期时间（默认12h），完事。
+
+### 2. 配料的使用情况
+```shell
+# 配料为key 菜品为value
+SADD ingredient:id dish:id
+
+# 获取使用了该配料的菜品
+SMEMBERS ingredient:id
+
+# 获取使用该配料的菜品数，可以做排序
+SCARD ingredient:id
+```
+
+## Zset
+```shell
+# dish1 做过10次了
+ZADD dish:ranking 10 dish:id1
+
+# 又做了一次dish1
+ZINCRBY dish:ranking 1 dish:id1
+
+# 获取做过的次数最多的前三名，并输出分数
+ZREVRANGE dish:ranking 0 2 WITHSCORES
+```
+
+## BitMap
+可以统计每个月做饭次数
+```shell
+# uid为xxx的用户在8月4号做饭了
+SETBIT uid:cook:xxx:202308 3 1 
+
+# 统计该用户8月做饭次数
+BITCOUNT uid:cook:xxx:202308
+```

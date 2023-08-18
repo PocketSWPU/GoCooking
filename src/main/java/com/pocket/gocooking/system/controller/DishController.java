@@ -121,4 +121,6 @@ public class DishController {
         dishService.deleteDish(id);
         return Result.success();
     }
+
+
 }
