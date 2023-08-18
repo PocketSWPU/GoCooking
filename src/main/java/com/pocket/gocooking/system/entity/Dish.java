@@ -1,5 +1,9 @@
 package com.pocket.gocooking.system.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 import java.time.LocalTime;
 
@@ -11,9 +15,10 @@ import java.time.LocalTime;
  * @author PengZF
  * @since 2023-06-24
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Dish implements Serializable {
-
-    private static final long serialVersionUID = 1L;
 
     private Integer dishId;
 
@@ -23,45 +28,7 @@ public class Dish implements Serializable {
 
     private String difficulty;
 
-    public Integer getDishId() {
-        return dishId;
-    }
+    private Integer creatId;
 
-    public void setDishId(Integer dishId) {
-        this.dishId = dishId;
-    }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public LocalTime getTime() {
-        return time;
-    }
-
-    public void setTime(LocalTime time) {
-        this.time = time;
-    }
-
-    public String getDifficulty() {
-        return difficulty;
-    }
-
-    public void setDifficulty(String difficulty) {
-        this.difficulty = difficulty;
-    }
-
-    @Override
-    public String toString() {
-        return "Dish{" +
-            "dishId = " + dishId +
-            ", name = " + name +
-            ", time = " + time +
-            ", difficulty = " + difficulty +
-        "}";
-    }
 }

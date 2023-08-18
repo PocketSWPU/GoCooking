@@ -30,7 +30,8 @@ public interface DishMapper{
      * @param difficulty
      * @return
      */
-    List<Dish> selectAll(@Param("name") String name, @Param("difficulty") String[] difficulty);
+    List<Dish> selectAll(@Param("name") String name, @Param("difficulty") String[] difficulty,
+                         @Param("creatId") Integer creatId);
 
     /**
      * 获取和dish_id对应的

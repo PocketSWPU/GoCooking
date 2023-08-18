@@ -3,47 +3,43 @@
 <mapper namespace="com.pocket.gocooking.system.mapper.DishMapper">
 
 
-<!--    <select id="selectAll" resultType="Dish">-->
-<!--        select dish_id as dishId, name, time, difficulty from dish_table-->
-<!--    </select>-->
+    <!--    <select id="selectAll" resultType="Dish">-->
+    <!--        select dish_id as dishId, name, time, difficulty from dish_table-->
+    <!--    </select>-->
 
     <select id="selectAll" resultMap="dishResultMap">
         select dish_id, name, time, difficulty from dish_table
-        <where>
-            <if test="name != null">
-                name LIKE #{name}
-            </if>
-            <if test="difficulty != null">
-            AND
-                <foreach collection="difficulty" index="index" item="difficulty"
-                         open="difficulty in (" separator="," close=")" nullable="true">
-                    #{difficulty}
-                </foreach>
-            </if>
-        </where>
-
+        WHERE creat_id = #{creatId}
+        <if test="name != null">
+            AND name LIKE #{name}
+        </if>
+        <if test="difficulty != null">
+            AND difficulty IN
+            <foreach item="item" collection="difficulty" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
     </select>
 
     <select id="getIngredientById" resultType="DishIngredientDTO">
-        select  c.ingredient_name as name, d.category_name as category
+        select c.ingredient_name as name, d.category_name as category
         FROM dish_table a
-        LEFT JOIN dish_ingredient_table b on b.dish_id = a.dish_id
-        LEFT JOIN ingredient_table c on b.ingredient_id = c.ingredient_id
-        INNER JOIN ingredient_category_table d on d.ingredient_category_id = c.category_id
+                 LEFT JOIN dish_ingredient_table b on b.dish_id = a.dish_id
+                 LEFT JOIN ingredient_table c on b.ingredient_id = c.ingredient_id
+                 INNER JOIN ingredient_category_table d on d.ingredient_category_id = c.category_id
         WHERE a.dish_id = #{dishId};
     </select>
 
 
-
     <resultMap id="dishResultMap" type="Dish">
-        <id property="dishId" column="dish_id" />
+        <id property="dishId" column="dish_id"/>
         <result property="name" column="name"/>
         <result property="time" column="time"/>
         <result property="difficulty" column="difficulty"/>
     </resultMap>
 
     <insert id="insertDish" parameterType="Dish">
-        insert into dish_table (name,difficulty) values (#{name}, #{difficulty})
+        insert into dish_table (name,difficulty,creat_id) values (#{name}, #{difficulty}, #{creatId})
         <selectKey keyProperty="dishId" order="AFTER" resultType="int" keyColumn="dish_id">
             SELECT LAST_INSERT_ID()
         </selectKey>
@@ -55,7 +51,9 @@
     </insert>
 
     <delete id="deleteDishById" parameterType="Integer">
-        DELETE FROM dish_table WHERE dish_id = #{dishId}
+        DELETE
+        FROM dish_table
+        WHERE dish_id = #{dishId}
     </delete>
 
 

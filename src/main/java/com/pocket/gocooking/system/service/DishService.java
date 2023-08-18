@@ -20,7 +20,7 @@ public interface DishService {
      */
     Dish selectById(Integer id);
 
-    List<Dish> selectAll(String name, String[] difficulty);
+    List<Dish> selectAll(String name, String[] difficulty, Integer userId);
 
     List<DishIngredientDTO> getIngredientById(Integer id);
 
@@ -33,10 +33,11 @@ public interface DishService {
      * @param name 菜名
      * @param difficulty 难易度
      * @param ingredients 先用'|'分割，再以逗号分割的字符串
+     * @param userId 用户id
      * @return
      * -1: 有重复
      */
-    Integer insertDish(String name, String difficulty, String ingredients);
+    Integer insertDish(String name, String difficulty, String ingredients, Integer userId);
 
     /**
      * 删除菜品

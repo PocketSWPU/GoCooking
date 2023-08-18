@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -56,5 +57,16 @@ public class Utils {
             ingredientAddedId = tempIngreList.get(0).getIngredientId();
         }
         return ingredientAddedId;
+    }
+
+    /**
+     * 根据cookie查询id
+     * @param cookie
+     * @return
+     */
+    public Integer getUser(String cookie){
+        Object tempUser = redis.opsForValue().get(cookie);
+        User user = JSON.parseObject(JSON.toJSONString(tempUser),User.class);
+        return user.getId();
     }
 }

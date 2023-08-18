@@ -51,8 +51,8 @@ public class DishServiceImpl implements DishService {
     }
 
     @Override
-    public List<Dish> selectAll(String name, String[] difficulty) {
-        return dishMapper.selectAll(name, difficulty);
+    public List<Dish> selectAll(String name, String[] difficulty, Integer userId) {
+        return dishMapper.selectAll(name, difficulty, userId);
     }
 
     @Override
@@ -83,9 +83,9 @@ public class DishServiceImpl implements DishService {
     }
 
     @Override
-    public Integer insertDish(String name, String difficulty, String ingredients) {
+    public Integer insertDish(String name, String difficulty, String ingredients, Integer userId) {
         // 1. 查询名字是否重复，重复返回错误
-        if(dishMapper.selectAll(name,null).size() != 0){
+        if(dishMapper.selectAll(name,null, userId).size() != 0){
             return -1;
         }
 
@@ -96,6 +96,7 @@ public class DishServiceImpl implements DishService {
         Dish dish = new Dish();
         dish.setName(name);
         dish.setDifficulty(difficulty);
+        dish.setCreatId(userId);
         dishMapper.insertDish(dish);
         Integer dishId = dish.getDishId();
 
@@ -134,6 +135,9 @@ public class DishServiceImpl implements DishService {
                 dishIngredient.setDishId(dishId);
                 dishIngredient.setIngredientId(ingredientAddedId);
                 dishMapper.insertDishIngredient(dishIngredient);
+
+                // Redis Zset
+                redis.opsForZSet().add("uid:ranking", ingredientName, 1);
             }
         }
 

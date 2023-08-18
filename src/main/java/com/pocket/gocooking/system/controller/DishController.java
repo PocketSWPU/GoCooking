@@ -4,12 +4,15 @@ package com.pocket.gocooking.system.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.pocket.gocooking.common.Result;
+import com.pocket.gocooking.common.Utils;
 import com.pocket.gocooking.system.entity.DishIngredientDTO;
 import com.pocket.gocooking.system.entity.Dish;
 import com.pocket.gocooking.system.service.DishService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,6 +38,9 @@ public class DishController {
 
     @Autowired
     private DishService dishService;
+
+    @Autowired
+    private Utils utils;
 
 //    @Autowired
 //    private CacheManager cacheManager;
@@ -68,14 +74,17 @@ public class DishController {
     public Result<Map<String, Object>> selectAll(@RequestParam(value = "name", required = false) String name,
                                                  @RequestParam("pageNo") Integer pageNo,
                                                  @RequestParam("pageSize") Integer pageSize,
-                                                 @RequestParam(value = "difficulty", required = false) String[] difficulty) {
+                                                 @RequestParam(value = "difficulty", required = false) String[] difficulty,
+                                                 @RequestParam("cookie") String cookie) {
         if(name != null) {
             // 加上通配符
             name = "%" + name +"%";
         }
+        Integer userId = utils.getUserId(cookie);
 //        String[] difficultyArray = difficulty.split(",");
         PageHelper.startPage(pageNo, pageSize);
-        List<Dish> dishResult = dishService.selectAll(name,difficulty);
+
+        List<Dish> dishResult = dishService.selectAll(name,difficulty,userId);
         PageInfo<Dish> pageInfo = new PageInfo<>(dishResult);
         System.out.println(pageInfo);
         HashMap<String, Object> data = new HashMap<>();
@@ -108,8 +117,10 @@ public class DishController {
     @Transactional(rollbackFor = Exception.class)
     public Result insertDish(@RequestParam(value = "name", required = false) String name,
                              @RequestParam(value = "difficulty", required = false) String difficulty,
-                             @RequestParam(value = "ingredients", required = false) String ingredients){
-        Integer result = dishService.insertDish(name, difficulty, ingredients);
+                             @RequestParam(value = "ingredients", required = false) String ingredients,
+                             @RequestParam(value = "cookie") String cookie){
+        Integer userId = utils.getUser(cookie);
+        Integer result = dishService.insertDish(name, difficulty, ingredients, userId);
 
         return result == 1?Result.success():Result.fail();
     }
