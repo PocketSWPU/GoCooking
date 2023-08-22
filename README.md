@@ -13,8 +13,11 @@ GoCooking是个给厨房新手的辅助工具，记录做一个菜需要的配�
 
 ### 推荐功能
 ![image](https://github.com/PocketSWPU/GoCooking/assets/107466625/01eb778b-c7d0-4fdb-a058-1009d18bd5da)
+
 点击后进行推荐
+
 ![image](https://github.com/PocketSWPU/GoCooking/assets/107466625/e656996d-5c91-46ac-aec3-e1f19165eb5e)
+
 推荐算法: 为了在Java中方便使用，采用了轻量级的推荐算法。灵感来源于基于内容的协同过滤(Content-based RS)和基于人口信息的推荐系统(Demographic-based RS)，通过用户特征计算用户间的相似度，然后进行推荐。
 推荐思路有：
 - 基于相似用户的随机推荐
