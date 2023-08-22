@@ -6,4 +6,8 @@
     <select id="selectByNameAndPassword" resultType="User">
         select * from user_table where username = #{username} and password = #{password}
     </select>
+
+    <select id="selectAllUsers" resultType="User">
+        SELECT id,gender,age,province FROM user_table
+    </select>
 </mapper>
