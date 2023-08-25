@@ -33,6 +33,7 @@ public class RecommendServiceImpl implements RecommendService{
         }
     }
 
+    @Override
     public List<Dish> initRecommendation(User curUser){
         // 用户id集合
         List<User> userList = userMapper.selectAllUsers();
@@ -51,6 +52,8 @@ public class RecommendServiceImpl implements RecommendService{
         }
         List<Dish> recommendList = new ArrayList<>();
         HashSet<String> set = new HashSet<>();
+        // 应该set加入curUser的菜品名，防重复
+        // 待处理！
         while (heap.size() > 0){
             Integer candidateId = heap.remove().uid;
             // 获取这个用户做的次数最多的 (最喜欢的 / 最早添加的)
