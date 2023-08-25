@@ -2,6 +2,10 @@
 ## 项目背景
 纯练手项目，目标秋招Offer
 
+## 项目文档
+
+[数据库设计文档](https://github.com/PocketSWPU/GoCooking/blob/master/docs/DatabaseDesignDoc.md)
+
 ## 项目介绍
 GoCooking是个给厨房新手的辅助工具，记录做一个菜需要的配料和步骤，同时提供对某个做某些菜需要采购的材料的速记提示功能。
 
