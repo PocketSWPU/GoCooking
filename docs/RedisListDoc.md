@@ -48,7 +48,7 @@
 ## 5.排行榜信息
 ### 存储格式
 - 类型: String
-- 键: dish:id:{dishId}
+- 键: `dish:id:{dishId}`
 - 值: {dishName}
 
 ### 用途
