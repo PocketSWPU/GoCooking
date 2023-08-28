@@ -15,6 +15,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -133,5 +134,24 @@ public class DishController {
         return Result.success();
     }
 
+    @GetMapping("/times")
+    @Operation(summary = "获取次数")
+    public Result getTimes(@Param("dishId") Integer dishId, @Param("session") String session){
+        Integer times = dishService.getTimes(dishId, session);
+        return Result.success(times);
+    }
+
+    @PostMapping("/times/incr")
+    @Operation(summary = "增加次数")
+    public Result incrTimes(@Param("dishId") Integer dishId, @Param("session") String session){
+        Integer ans = dishService.increaseTimes(dishId, session);
+        return Result.success(ans);
+    }
+    @GetMapping("/ranking")
+    @Operation(summary = "排行")
+    public Result getRankingList(@Param("session") String session){
+        List<HashMap<String,String>> rankingList = dishService.getRankingList(session);
+        return Result.success(rankingList);
+    }
 
 }

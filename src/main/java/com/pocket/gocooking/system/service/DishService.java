@@ -3,8 +3,10 @@ package com.pocket.gocooking.system.service;
 import com.pocket.gocooking.system.entity.DishIngredient;
 import com.pocket.gocooking.system.entity.DishIngredientDTO;
 import com.pocket.gocooking.system.entity.Dish;
+import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -53,4 +55,27 @@ public interface DishService {
      * @return
      */
     Integer updateDishIngredient(Integer id, String ingredientStr, Integer category);
+
+    /**
+     * 查询用户做某个菜的次数
+     * @param dishId
+     * @param session
+     * @return
+     */
+    Integer getTimes(Integer dishId, String session);
+
+    /**
+     * 增加次数
+     * @param dishId
+     * @param session
+     * @return
+     */
+    Integer increaseTimes(Integer dishId, String session);
+
+    /**
+     * 获取排行榜
+     * @param session
+     * @return
+     */
+    List<HashMap<String,String>> getRankingList(String session);
 }

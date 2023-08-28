@@ -21,7 +21,7 @@ import java.util.List;
  */
 @Mapper
 public interface DishMapper{
-    @Select("select dish_id as dishId, name, time, difficulty from dish_table where dish_id = #{dish_id}")
+    @Select("select dish_id as dishId, name, difficulty from dish_table where dish_id = #{dish_id}")
     Dish selectById(@Param("dish_id") Integer id);
 
     /**

@@ -8,7 +8,7 @@
     <!--    </select>-->
 
     <select id="selectAll" resultMap="dishResultMap">
-        select dish_id, name, time, difficulty from dish_table
+        select dish_id, name, difficulty from dish_table
         WHERE creat_id = #{creatId}
         <if test="name != null">
             AND name LIKE #{name}
