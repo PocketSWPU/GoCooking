@@ -6,6 +6,8 @@
 
 [数据库设计文档](https://github.com/PocketSWPU/GoCooking/blob/master/docs/DatabaseDesignDoc.md)
 
+[Redis使用记录](https://github.com/PocketSWPU/GoCooking/blob/master/docs/RedisListDoc.md)
+
 ## 项目介绍
 GoCooking是个给厨房新手的辅助工具，记录做一个菜需要的配料和步骤，同时提供对某个做某些菜需要采购的材料的速记提示功能。
 
