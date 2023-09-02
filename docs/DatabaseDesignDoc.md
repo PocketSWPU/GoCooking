@@ -27,6 +27,9 @@
     - '简单'
     - '中等'
     - '复杂'
+  
+#### 索引
+- 前缀索引: `dish_name_index` name 列, 索引长度`2`
 
 ### user_table 表
 | 字段名      | 数据类型       | 空值约束   | 主键  | 描述 |
@@ -71,6 +74,9 @@
 | ingredient_id | INT   | NOT NULL | ✔    | 配料唯一标识符 |
 | category_id   | INT   | NOT NULL |      | 种类外键 |
 | ingredient_name   | VARCHAR(50)   | NOT NULL |      | 配料名 |
+
+#### 索引
+- 联合索引: `ingredient_name_category_index` ingredient_name列, category_id列
 
 #### 约束
 - 主键: ingredient_id 

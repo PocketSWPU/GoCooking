@@ -79,7 +79,7 @@ public class DishController {
                                                  @RequestParam("cookie") String cookie) {
         if(name != null) {
             // 加上通配符
-            name = "%" + name +"%";
+            name = name +"%";
         }
         Integer userId = utils.getUserId(cookie);
 //        String[] difficultyArray = difficulty.split(",");

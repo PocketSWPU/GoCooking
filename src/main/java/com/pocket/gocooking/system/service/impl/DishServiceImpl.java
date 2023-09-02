@@ -138,7 +138,6 @@ public class DishServiceImpl implements DishService {
                 // 添加到dish_ingredient_table
                 // new -> 享元模式
                 DishIngredient dishIngredient = ingredientPool.getIngredient(ingredientName);
-//                DishIngredient dishIngredient = new DishIngredient();
                 dishIngredient.setDishId(dishId);
                 dishIngredient.setIngredientId(ingredientAddedId);
                 dishMapper.insertDishIngredient(dishIngredient);
